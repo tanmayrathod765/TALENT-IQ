@@ -2,7 +2,7 @@ import { BACKEND_URL } from "../config";
 
 export async function testBackend() {
   if (!BACKEND_URL) {
-    console.log("❌ BACKEND_URL missing. Add VITE_BACKEND_URL in Vercel env.");
+    console.log("❌ BACKEND_URL missing. Add VITE_BACKEND_URL in env.");
     return;
   }
 

@@ -1,1 +1,1 @@
-export const BASE_URL = "https://talent-iq-fsw2.onrender.com";
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
