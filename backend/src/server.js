@@ -13,7 +13,7 @@ console.log(ENV.PORT);
 
 app.use(express.json());
 app.use(cors({origin : ENV.CLIENT_URL,credentials : true}));
-app.use("/inngest",serve({client : inngest,functions}));
+app.use("/api/inngest",serve({client : inngest,functions}));
 app.get("/",(req,res)=>
 {
     res.status(200).json({
