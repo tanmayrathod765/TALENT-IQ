@@ -50,7 +50,6 @@ export async function createSession(req,res) {
     }
 }
 
-
 export async function getActiveSessions(_,res) {
     try {
         const sessions = await Session.find({status :"active"})
