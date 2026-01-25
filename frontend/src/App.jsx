@@ -1,30 +1,27 @@
-
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton, useUser } from "@clerk/clerk-react";
-import { useEffect } from "react";
-import { testBackend } from "./api/testBackend";
-import { Routes, Route, Navigate } from "react-router-dom";  
+import { useUser } from "@clerk/clerk-react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProblemsPage from "./pages/ProblemsPage";
 import { Toaster } from "react-hot-toast";
-
+import DashboardPage from "./pages/DashboardPage";
 
 function App() {
- 
-const { isSignedIn } = useUser(); 
+  const { isSignedIn, isLoaded } = useUser();
+
+  if (!isLoaded) return null;
+
   return (
     <>
-    <Routes>
-      
-    
-      <Route path="/" element={<HomePage />} />
-     
-      <Route path="/problems" element={isSignedIn ? <ProblemsPage />: <Navigate to = {"/"}/>} />
-    </Routes>
+    <div data-theme="forest" className="min-h-screen bg-base-200">
+      <Routes>
+        <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to="/" />} />
+        <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to="/" />} />
+      </Routes>
 
-    <Toaster/>
-
-</>
-    
+      <Toaster toastOptions={{ duration: 3000 }} />
+     </div>
+    </>
   );
 }
 
