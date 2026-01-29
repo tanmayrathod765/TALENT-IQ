@@ -1,48 +1,42 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const sessionSchema = new mongoose.Schema({
-    problem :{
-        type : String,
-        required : true
-    },
-    difficulty : 
-    {
-        type : String,
-        required : true,
-        enum : ['easy', 'medium', 'hard']
-    },
-    host :
-    {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User',
-        required : true
+const sessionSchema = new mongoose.Schema(
+  {
+    problem: {
+      type: String,
+      required: true,
     },
 
-    perticipants :
-    {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User',
-        default : null,
-    
+    difficulty: {
+      type: String,
+      required: true,
+      enum: ["easy", "medium", "hard"],
     },
 
-    status :
-    {
-        type : String,
-        enum : ["active","completed"],
-        default : "active",
-
+    host: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
 
-    callId : 
-    {
-        type : String,
-        default : "",
+    participants: {   // ✅ fixed spelling
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
 
-},
-{ timestamps : true });
+    status: {
+      type: String,
+      enum: ["active", "completed"],
+      default: "active",
+    },
 
-const Session = mongoose.model("Session", sessionSchema);
+    callId: {
+      type: String,
+      default: "",
+    },
+  },
+  { timestamps: true }
+);
 
-export default Session;
+export default mongoose.model("Session", sessionSchema);
