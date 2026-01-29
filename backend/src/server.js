@@ -16,7 +16,7 @@ const app = express();
 const __dirname = path.resolve();
 console.log(ENV.PORT);
 
-import cors from "cors";
+
 
 app.use(cors({
   origin: function (origin, callback) {
