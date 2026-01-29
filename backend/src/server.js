@@ -17,9 +17,13 @@ const __dirname = path.resolve();
 console.log(ENV.PORT);
 
 app.use(cors({
-  origin: true,   // allow all origins safely with credentials
-  credentials: true,
+  origin: [
+    "http://localhost:5173",
+    "https://talent-3vk2pmzi9-tanmayrathod765s-projects.vercel.app"
+  ],
+  credentials: true
 }));
+
 
 app.use(express.json());
 
