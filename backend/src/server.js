@@ -17,11 +17,10 @@ const __dirname = path.resolve();
 console.log(ENV.PORT);
 
 app.use(cors({
-    origin: true,
-    credentials: true,
-    methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-    allowedHeaders: ["Content-Type","Authorization"]
+  origin: true,   // allow all origins safely with credentials
+  credentials: true,
 }));
+
 app.use(express.json());
 
 app.use("/api/inngest",serve({client : inngest,functions}));
