@@ -16,13 +16,24 @@ const app = express();
 const __dirname = path.resolve();
 console.log(ENV.PORT);
 
+import cors from "cors";
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://talent-3vk2pmzi9-tanmayrathod765s-projects.vercel.app"
-  ],
-  credentials: true
+  origin: function (origin, callback) {
+    if (
+      !origin ||
+      origin.includes("vercel.app") ||
+      origin.includes("localhost")
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
 }));
+
+
 
 
 app.use(express.json());
