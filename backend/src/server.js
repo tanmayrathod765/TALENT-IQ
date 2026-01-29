@@ -16,11 +16,13 @@ const app = express();
 const __dirname = path.resolve();
 console.log(ENV.PORT);
 
-app.use(express.json());
 app.use(cors({
-  origin: true,
-  credentials: true
+    origin: true,
+    credentials: true,
+    methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+    allowedHeaders: ["Content-Type","Authorization"]
 }));
+app.use(express.json());
 
 app.use("/api/inngest",serve({client : inngest,functions}));
 app.use(clerkMiddleware());
