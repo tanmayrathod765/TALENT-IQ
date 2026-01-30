@@ -22,20 +22,12 @@ console.log("PORT:", ENV.PORT);
 
 // ✅ CORS — allow localhost + vercel frontend
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-
-    if (
-      origin.includes("vercel.app") ||
-      origin.includes("localhost")
-    ) {
-      return callback(null, true);
-    }
-
-    callback(new Error("CORS blocked: " + origin));
-  },
+  origin: [ENV.CLIENT_URL, "http://localhost:5173"],
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+
 
 
 
