@@ -1,22 +1,28 @@
+import { verifyToken } from "@clerk/backend";
 import User from "../models/User.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    if (!req.auth || !req.auth.userId) {
-      return res.status(401).json({ message: "Unauthorized" });
+    const header = req.headers.authorization;
+
+    if (!header) {
+      return res.status(401).json({ message: "No auth header" });
     }
 
-    const clerkId = req.auth.userId;
+    const token = header.replace("Bearer ", "");
+    const payload = await verifyToken(token, {
+      secretKey: process.env.CLERK_SECRET_KEY,
+    });
+
+    const clerkId = payload.sub;
 
     const user = await User.findOne({ clerkId });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     req.user = user;
     next();
-  } catch (error) {
-    console.error("Auth error:", error);
-    res.status(500).json({ message: "Auth middleware error" });
+  } catch (err) {
+    console.error("Auth verify failed:", err.message);
+    res.status(401).json({ message: "Unauthorized" });
   }
 };
