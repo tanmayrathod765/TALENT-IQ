@@ -21,18 +21,22 @@ console.log("PORT:", ENV.PORT);
 
 
 // ✅ CORS — allow localhost + vercel frontend
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://talent-iq-five.vercel.app",
-      "https://talent-r6sr2x6ux-tanmayrathod765s-projects.vercel.app"
-    ],
-    credentials: true,
-    methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-    allowedHeaders: ["Content-Type","Authorization"]
-  })
-);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+
+    if (
+      origin.includes("vercel.app") ||
+      origin.includes("localhost")
+    ) {
+      return callback(null, true);
+    }
+
+    callback(new Error("CORS blocked: " + origin));
+  },
+  credentials: true,
+}));
+
 
 
 // ✅ body parser
