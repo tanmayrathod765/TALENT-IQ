@@ -6,12 +6,28 @@ export const useCreateSession = () => {
   const result = useMutation({
     mutationKey: ["createSession"],
     mutationFn: sessionApi.createSession,
-    onSuccess: () => toast.success("Session created successfully!"),
-    onError: (error) => toast.error(error.response?.data?.message || "Failed to create room"),
+
+    onSuccess: (data) => {
+      console.log("Create session response:", data);
+
+      if (!data?.session?._id) {
+        toast.error("Session created but ID missing");
+        return;
+      }
+
+      toast.success("Session created successfully!");
+    },
+
+    onError: (error) => {
+      console.log("Create session error:", error?.response?.data);
+      toast.error(error.response?.data?.message || "Failed to create room");
+    },
   });
 
   return result;
 };
+
+
 
 export const useActiveSessions = () => {
   const result = useQuery({
@@ -41,7 +57,7 @@ export const useSessionById = (id) => {
 
   return result;
 };
-
+//research 
 export const useJoinSession = () => {
   const result = useMutation({
     mutationKey: ["joinSession"],
