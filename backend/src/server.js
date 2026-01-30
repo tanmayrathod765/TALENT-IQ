@@ -37,8 +37,19 @@ app.use(cors({
 
 
 app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://talent-iq-five.vercel.app",
+  "https://talent-iq-git-new-branch-2-tanmayrathod765s-projects.vercel.app"
+];
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked"));
+    }
+  },
   credentials: true
 }));
 
