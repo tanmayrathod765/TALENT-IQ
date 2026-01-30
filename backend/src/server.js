@@ -37,22 +37,13 @@ app.use(cors({
 
 
 app.use(express.json());
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://talent-iq-five.vercel.app",
-  "https://talent-iq-git-new-branch-2-tanmayrathod765s-projects.vercel.app"
-];
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS blocked"));
-    }
-  },
+  origin: [
+    "http://localhost:5173",
+    "https://talent-iq-five.vercel.app"
+  ],
   credentials: true
 }));
-
 
 app.use("/api/inngest",serve({client : inngest,functions}));
 app.use(clerkMiddleware());

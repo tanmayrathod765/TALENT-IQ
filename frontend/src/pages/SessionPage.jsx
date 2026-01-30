@@ -22,7 +22,7 @@ function SessionPage() {
 
   const [output, setOutput] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
-
+//done
   const joinAttemptedRef = useRef(false);
 
   const { data: sessionData, isLoading: loadingSession } = useSessionById(id);
