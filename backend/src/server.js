@@ -36,7 +36,12 @@ app.use(express.json());
 
 
 // ✅ IMPORTANT — Clerk middleware BEFORE routes
-app.use(clerkMiddleware());
+app.use(
+  clerkMiddleware({
+    publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+  })
+);
+//
 
 
 // ✅ API routes
