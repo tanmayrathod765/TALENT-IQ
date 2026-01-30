@@ -16,6 +16,26 @@ const app = express();
 const __dirname = path.resolve();
 console.log(ENV.PORT);
 
+
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (
+      !origin ||
+      origin.includes("vercel.app") ||
+      origin.includes("localhost")
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
+
+
+
 app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173",
