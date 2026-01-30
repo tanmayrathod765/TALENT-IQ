@@ -25,7 +25,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://talent-iq-five.vercel.app", // ← your vercel domain
+      ENV.CLIENT_URL
     ],
     credentials: true,
   })
